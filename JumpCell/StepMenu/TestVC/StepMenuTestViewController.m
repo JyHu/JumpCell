@@ -78,9 +78,30 @@
                             @"y"
                             ];
     
+    NSArray *t2 = @[
+                    @"a",
+                    @"b",
+                    @{
+                        @"c"  : @[
+                                @"d",
+                                @{
+                                    @"e" : @"f"
+                                    }
+                                ]}
+                    ];
+    
+    NSDictionary *t3 = @{
+                         @"a" : @[
+                                 @"b",
+                                 @"c",
+                                 @{
+                                     @"d" : @"e"
+                                     }
+                                 ]};
+    
     // 初始化
     AUUStepMenu *stepMenu = [[AUUStepMenu alloc] initWithFrame:CGRectMake(0, 100, self.view.bounds.size.width, 300)
-                                                 andDatasource:datasource];
+                                                 andDatasource:t2];
     // 设置点击结果的回调接收
     [stepMenu menuSelectedCompletion:^(NSArray *currentDatasource,
                                        NSInteger index,

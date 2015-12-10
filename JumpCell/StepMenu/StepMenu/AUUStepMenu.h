@@ -22,7 +22,7 @@
  *
  *  @since v1.0
  */
-- (id)initWithFrame:(CGRect)frame andDatasource:(NSArray *)datasource;
+- (id)initWithFrame:(CGRect)frame andDatasource:(id)datasource;
 
 /**
  *  @author JyHu, 15-12-10 17:12:20
@@ -35,7 +35,7 @@
  *
  *  @since v1.0
  */
-- (id)initWithDatasource:(NSArray *)datasource;
+- (id)initWithDatasource:(id)datasource;
 
 /**
  *  @author JyHu, 15-12-10 17:12:31
@@ -44,7 +44,7 @@
  *
  *  @since v1.0
  */
-@property (retain, nonatomic) NSArray *datasource;
+@property (retain, nonatomic) id datasource;
 
 /**
  *  @author JyHu, 15-12-10 17:12:07

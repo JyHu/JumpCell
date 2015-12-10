@@ -161,13 +161,15 @@ CGFloat const defaultAnimationDuration = 0.5;
  */
 @property (assign, nonatomic) NSInteger menuCount;
 
+@property (retain, nonatomic) NSArray *menuItemsArray;
+
 @end
 
 @implementation AUUStepMenu
 
 #pragma mark - 一系列初始化方法
 
-- (id)initWithFrame:(CGRect)frame andDatasource:(NSArray *)datasource
+- (id)initWithFrame:(CGRect)frame andDatasource:(id)datasource
 {
     if (self = [super initWithFrame:frame])
     {
@@ -184,7 +186,7 @@ CGFloat const defaultAnimationDuration = 0.5;
     return self;
 }
 
-- (id)initWithDatasource:(NSArray *)datasource
+- (id)initWithDatasource:(id)datasource
 {
     return [self initWithFrame:CGRectZero andDatasource:datasource];
 }
@@ -210,11 +212,24 @@ CGFloat const defaultAnimationDuration = 0.5;
  *
  *  @since v1.0
  */
-- (void)setDatasource:(NSArray *)datasource
+- (void)setDatasource:(id)datasource
 {
     if (datasource)
     {
         _datasource = datasource;
+        
+        NSAssert(( ![datasource isKindOfClass:[NSArray class]] ||
+                   ![datasource isKindOfClass:[NSDictionary class]]),
+                 @"非法的数据源");
+        
+        if ([datasource isKindOfClass:[NSArray class]])
+        {
+            self.menuItemsArray = (NSArray *)datasource;
+        }
+        else if ([datasource isKindOfClass:[NSDictionary class]])
+        {
+            self.menuItemsArray = @[datasource];
+        }
         
         // 先清空当前菜单页面上的所有分级菜单
         [self removeSubmenuBehindTag:menuStartTag - 1];
@@ -260,7 +275,7 @@ CGFloat const defaultAnimationDuration = 0.5;
  */
 - (void)layoutSubviews
 {
-    [self addATableWithDatasource:self.datasource tag:menuStartTag];
+    [self addATableWithDatasource:self.menuItemsArray tag:menuStartTag];
 }
 
 /**
@@ -402,10 +417,21 @@ CGFloat const defaultAnimationDuration = 0.5;
     {
         NSDictionary *dictData = (NSDictionary *)currentData;
         
+        id value = [dictData objectForKey:[[dictData allKeys] firstObject]];
+        
+        NSArray *menuData;
+        
+        if ([value isKindOfClass:[NSString class]])
+        {
+            menuData = @[value];
+        }
+        else
+        {
+            menuData = (NSArray *)value;
+        }
         
         // 当前数据是字典，说明还有子菜单，就添加一个子菜单到当前页面
-        [self addATableWithDatasource:[dictData objectForKey:[[dictData allKeys] firstObject]]
-                                  tag:tableView.tag + 1];
+        [self addATableWithDatasource:menuData tag:tableView.tag + 1];
         
         self.selectedCompletion(tableView.datasArray, indexPath.row, YES);
     }
@@ -430,6 +456,8 @@ CGFloat const defaultAnimationDuration = 0.5;
         // 如果页面上有这一级菜单的话，则需要返回，不然的话，会重复添加到页面上
         return;
     }
+    
+    
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:self.bounds
                                                           style:UITableViewStylePlain];
