@@ -64,8 +64,9 @@
  *
  *  @since v1.0
  */
-- (void)menuSelectedCompletion:(void (^)(NSArray *currentDatasource,
-                                         NSInteger index,
-                                         BOOL hadAdditionalMenu))selectedCompletion;
+- (void)menuSelectedCompletion:(void (^)(NSArray *currentDatasource,    // 当前级菜单的数据源
+                                         NSInteger index,               // 在当前级菜单选择的位置索引
+                                         BOOL hadAdditionalMenu         // 是否还有子菜单
+                                    ))selectedCompletion;
 
 @end

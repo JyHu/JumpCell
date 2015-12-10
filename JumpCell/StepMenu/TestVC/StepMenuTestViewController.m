@@ -21,32 +21,42 @@
     
     self.view.backgroundColor = [UIColor grayColor];
     
+    // 新建一个测试的菜单的数据源
     NSArray *datasource = @[
                             @"a",
                             @"b",
-                            @{@"c" : @[
+                            @{
+                                @"c" : @[
                                       @"f",
                                       @"g",
                                       @"h",
-                                      @{@"i" : @[
-                                                @{@"j" : @[
+                                      @{
+                                          @"i" : @[
+                                                  @{
+                                                    @"j" : @[
                                                           @"q",
                                                           @"t",
                                                           @"r",
                                                           @"s",
-                                                          @{@"a" : @[
+                                                          @{
+                                                              @"a" : @[
                                                                     @"b",
                                                                     @"c",
-                                                                    @{@"s" : @[
+                                                                    @{
+                                                                        @"s" : @[
                                                                               @"g",
                                                                               @"h",
                                                                               @"j",
                                                                               @"k",
-                                                                              @{@"z" : @[
+                                                                              @{
+                                                                                  @"z" : @[
                                                                                         @"x",
                                                                                         @"c",
                                                                                         @"b",
-                                                                                        @{@"v" : @[@"n"]}
+                                                                                        @{
+                                                                                            @"v" : @[
+                                                                                                    @"n"
+                                                                                                    ]}
                                                                                         ]}
                                                                               ]},
                                                                     @"d",
@@ -68,13 +78,20 @@
                             @"y"
                             ];
     
+    // 初始化
     AUUStepMenu *stepMenu = [[AUUStepMenu alloc] initWithFrame:CGRectMake(0, 100, self.view.bounds.size.width, 300)
                                                  andDatasource:datasource];
-    stepMenu.backgroundColor = [UIColor colorWithRed:0.9 green:0.5 blue:0.9 alpha:0.4];
-    [stepMenu menuSelectedCompletion:^(NSArray *currentDatasource, NSInteger index, BOOL hadAdditionalMenu) {
-        NSLog(@"%@随后的菜单, 当前的菜单是%@", hadAdditionalMenu ? @"还有" : @"没有", hadAdditionalMenu ? [[[currentDatasource objectAtIndex:index] allKeys] firstObject] : [currentDatasource objectAtIndex:index]);
+    // 设置点击结果的回调接收
+    [stepMenu menuSelectedCompletion:^(NSArray *currentDatasource,
+                                       NSInteger index,
+                                       BOOL hadAdditionalMenu) {
+        NSLog(@"%@随后的菜单, 当前的菜单是%@",
+                            hadAdditionalMenu ? @"还有" : @"没有",
+                            hadAdditionalMenu ? [[[currentDatasource objectAtIndex:index] allKeys] firstObject] :
+                                                [currentDatasource objectAtIndex:index]);
     }];
     
+    // 添加到要显示的页面上
     [self.view addSubview:stepMenu];
     
 }
