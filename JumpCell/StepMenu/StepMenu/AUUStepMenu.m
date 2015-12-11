@@ -325,6 +325,11 @@ CGFloat const defaultAnimationDuration = 0.5;
  */
 - (void)removeSubmenuBehindTag:(NSInteger)tag
 {
+    if (tag >= menuStartTag + self.menuCount - 1)
+    {
+        // 如果当前菜单没有子菜单，则无需再次移除
+        return;
+    }
     // 遍历去移除
     for (NSInteger i = tag + 1; i < menuStartTag + self.menuCount; i ++)
     {
@@ -425,11 +430,18 @@ CGFloat const defaultAnimationDuration = 0.5;
         {
             menuData = @[value];
         }
-        else
+        else if ([value isKindOfClass:[NSArray class]])
         {
             menuData = (NSArray *)value;
         }
-        
+        else if ([value isKindOfClass:[NSDictionary class]])
+        {
+            menuData = @[value];
+        }
+        else
+        {
+            NSAssert(1, @"子菜单的数据类型错误");
+        }
         // 当前数据是字典，说明还有子菜单，就添加一个子菜单到当前页面
         [self addATableWithDatasource:menuData tag:tableView.tag + 1];
         
@@ -453,6 +465,12 @@ CGFloat const defaultAnimationDuration = 0.5;
 {
     if ([self viewWithTag:tag])
     {
+        if (tag > menuStartTag)
+        {
+            // 如果当前级菜单还有子菜单，需要移除子菜单的下级菜单
+            [self removeSubmenuBehindTag:tag];
+        }
+        
         // 如果页面上有这一级菜单的话，则需要返回，不然的话，会重复添加到页面上
         return;
     }

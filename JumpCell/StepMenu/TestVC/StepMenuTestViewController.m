@@ -55,7 +55,18 @@
                                                                                         @"b",
                                                                                         @{
                                                                                             @"v" : @[
-                                                                                                    @"n"
+                                                                                                    @"n",
+                                                                                                    @{
+                                                                                                        @"a":@{
+                                                                                                                @"b" : @{
+                                                                                                                        @"c" : @{
+                                                                                                                                @"d" : @{
+                                                                                                                                        @"e" : @"f"
+                                                                                                                                        }
+                                                                                                                                }
+                                                                                                                        }
+                                                                                                                }
+                                                                                                        }
                                                                                                     ]}
                                                                                         ]}
                                                                               ]},
@@ -101,7 +112,7 @@
     
     // 初始化
     AUUStepMenu *stepMenu = [[AUUStepMenu alloc] initWithFrame:CGRectMake(0, 100, self.view.bounds.size.width, 300)
-                                                 andDatasource:t2];
+                                                 andDatasource:datasource];
     // 设置点击结果的回调接收
     [stepMenu menuSelectedCompletion:^(NSArray *currentDatasource,
                                        NSInteger index,
