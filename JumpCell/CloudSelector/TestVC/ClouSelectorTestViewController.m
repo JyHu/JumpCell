@@ -31,8 +31,9 @@
     cls.frame = CGRectMake(10, 100, self.view.frame.size.width - 20, 400);
     cls.alignmentInsets = UIEdgeInsetsZero;
     cls.backgroundColor = [UIColor whiteColor];
+    cls.maxSelectedItems = 5;
+    cls.canReselected = NO;
     cls.titleColor = [UIColor colorWithRed:215/255.0 green:79/255.0 blue:181/255.0 alpha:1];
-    cls.canReselected = YES;
     [cls selectedCompletion:^(NSString *title, NSInteger index) {
         
         [indexes addObject:@(index)];
