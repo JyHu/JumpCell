@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface AUUStepMenu : UIView
+
 
 /**
  *  @author JyHu, 15-12-10 17:12:00
@@ -22,7 +24,7 @@
  *
  *  @since v1.0
  */
-- (id)initWithFrame:(CGRect)frame andDatasource:(id)datasource;
+- (id)initWithFrame:(CGRect)frame andItemsSource:(id)itemsSource;
 
 /**
  *  @author JyHu, 15-12-10 17:12:20
@@ -35,16 +37,16 @@
  *
  *  @since v1.0
  */
-- (id)initWithDatasource:(id)datasource;
+- (id)initWithItemsSource:(id)itemsSource;
 
 /**
  *  @author JyHu, 15-12-10 17:12:31
  *
- *  菜单条目数据源
+ *  菜单条目数据源，只能是数组或字典
  *
  *  @since v1.0
  */
-@property (retain, nonatomic) id datasource;
+@property (retain, nonatomic) id itemsSource;
 
 /**
  *  @author JyHu, 15-12-10 17:12:07
@@ -64,7 +66,7 @@
  *
  *  @since v1.0
  */
-- (void)menuSelectedCompletion:(void (^)(NSArray *currentDatasource,    // 当前级菜单的数据源
+- (void)menuSelectedCompletion:(void (^)(id currentDatasource,    // 当前级菜单选择的菜单项对应的数据源
                                          NSInteger index,               // 在当前级菜单选择的位置索引
                                          BOOL hadAdditionalMenu         // 是否还有子菜单
                                     ))selectedCompletion;

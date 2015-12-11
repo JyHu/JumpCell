@@ -148,7 +148,7 @@ CGFloat const defaultAnimationDuration = 0.5;
  *
  *  @since v1.0
  */
-@property (copy, nonatomic) void (^selectedCompletion)( NSArray *currentDatasource,
+@property (copy, nonatomic) void (^selectedCompletion)( id currentDatasource,
                                                         NSInteger index,
                                                         BOOL hadAdditionalMenu);
 
@@ -169,31 +169,31 @@ CGFloat const defaultAnimationDuration = 0.5;
 
 #pragma mark - 一系列初始化方法
 
-- (id)initWithFrame:(CGRect)frame andDatasource:(id)datasource
+- (id)initWithFrame:(CGRect)frame andItemsSource:(id)itemsSource
 {
     if (self = [super initWithFrame:frame])
     {
-        if (datasource)
+        if (itemsSource)
         {
             // 初始化一些属性。
             
             self.clipsToBounds = YES;
             self.maxMenuStepsInScreen = 3;
-            self.datasource = datasource;
+            self.itemsSource = itemsSource;
         }
     }
     
     return self;
 }
 
-- (id)initWithDatasource:(id)datasource
+- (id)initWithItemsSource:(id)itemsSource
 {
-    return [self initWithFrame:CGRectZero andDatasource:datasource];
+    return [self initWithFrame:CGRectZero andItemsSource:itemsSource];
 }
 
 - (id)initWithFrame:(CGRect)frame
 {
-    return [self initWithFrame:frame andDatasource:nil];
+    return [self initWithFrame:frame andItemsSource:nil];
 }
 
 - (id)init
@@ -212,23 +212,23 @@ CGFloat const defaultAnimationDuration = 0.5;
  *
  *  @since v1.0
  */
-- (void)setDatasource:(id)datasource
+- (void)setItemsSource:(id)itemsSource
 {
-    if (datasource)
+    if (itemsSource)
     {
-        _datasource = datasource;
+        _itemsSource = itemsSource;
         
-        NSAssert(( ![datasource isKindOfClass:[NSArray class]] ||
-                   ![datasource isKindOfClass:[NSDictionary class]]),
+        NSAssert(( ![itemsSource isKindOfClass:[NSArray class]] ||
+                   ![itemsSource isKindOfClass:[NSDictionary class]]),
                  @"非法的数据源");
         
-        if ([datasource isKindOfClass:[NSArray class]])
+        if ([itemsSource isKindOfClass:[NSArray class]])
         {
-            self.menuItemsArray = (NSArray *)datasource;
+            self.menuItemsArray = (NSArray *)itemsSource;
         }
-        else if ([datasource isKindOfClass:[NSDictionary class]])
+        else if ([itemsSource isKindOfClass:[NSDictionary class]])
         {
-            self.menuItemsArray = @[datasource];
+            self.menuItemsArray = @[itemsSource];
         }
         
         // 先清空当前菜单页面上的所有分级菜单
@@ -256,7 +256,7 @@ CGFloat const defaultAnimationDuration = 0.5;
  *
  *  @since v1.0
  */
-- (void)menuSelectedCompletion:(void (^)(NSArray *, NSInteger, BOOL))selectedCompletion
+- (void)menuSelectedCompletion:(void (^)(id, NSInteger, BOOL))selectedCompletion
 {
     if (selectedCompletion)
     {
